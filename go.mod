@@ -1,4 +1,4 @@
-module demo.app
+module github.com/kcq/epss-golang-demo
 
 go 1.21
 
