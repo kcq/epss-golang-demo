@@ -43,6 +43,7 @@ jobs:
         context: .
         file: Dockerfile
         push: true
+        load: true
         tags: ghcr.io/${{ github.repository_owner }}/epss-golang-demo:latest
 
     - name: generate build provenance for app
@@ -56,3 +57,18 @@ jobs:
         subject-name: ghcr.io/${{ github.repository_owner }}/epss-golang-demo
         subject-digest: ${{ steps.push.outputs.digest }}
         push-to-registry: true
+
+    - name: Scan image with Anchore
+      id: anchorescan
+      uses: anchore/scan-action@v3
+      with:
+        image: ghcr.io/${{ github.repository_owner }}/epss-golang-demo:latest
+        output-format: sarif #should be the default (setting explicitly anyways)
+
+      - name: upload Anchore scan SARIF report
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ${{ steps.anchorescan.outputs.sarif }}
+
+      - name: Inspect action SARIF report
+        run: cat ${{ steps.anchorescan.outputs.sarif }}
