@@ -50,8 +50,8 @@ jobs:
         subject-path: '${{ github.workspace }}/app'
 
     - name: generate build provenance for app's container image
-        uses: github-early-access/generate-build-provenance@main
-        with:
-          subject-name: ghcr.io/${{ github.repository_owner }}/epss-golang-demo:latest
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
+      uses: github-early-access/generate-build-provenance@main
+      with:
+        subject-name: ghcr.io/${{ github.repository_owner }}/epss-golang-demo:latest
+        subject-digest: ${{ steps.push.outputs.digest }}
+        push-to-registry: true
