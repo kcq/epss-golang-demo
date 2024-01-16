@@ -65,10 +65,11 @@ jobs:
         fail-build: false
         output-format: sarif #should be the default (setting explicitly anyways)
 
-    - name: upload Anchore scan SARIF report
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: ${{ steps.anchorescan.outputs.sarif }}
+    #getting "Resource not accessible by integration" errors
+    #- name: upload Anchore scan SARIF report
+    #  uses: github/codeql-action/upload-sarif@v2
+    #  with:
+    #    sarif_file: ${{ steps.anchorescan.outputs.sarif }}
 
     - name: Inspect action SARIF report
       run: cat ${{ steps.anchorescan.outputs.sarif }}
